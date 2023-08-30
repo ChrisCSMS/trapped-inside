@@ -146,6 +146,11 @@ document.getElementById("player-name-submit").addEventListener("click", setName)
 document.getElementById("game-start-controls").addEventListener("click", startDay);
 document.getElementById("player-name-input").value = "";
 let day = 1;
+let activeLocations = [];
+let activeLocation = undefined;
+let activeLocationResources = [];
+let activeLocationResource = undefined;
+let cluesFound = [];
 
 function setName() {
     let playerName = document.getElementById("player-name-input").value;
@@ -163,4 +168,72 @@ function hideElement(elementId) {
 
 function showElement(elementId, displayType = "block") {
     document.getElementById(elementId).style.display = displayType;
+}
+
+function startDay() {
+
+    let pool = getCopyOfLocations();
+    let locationElements = document.getElementsByClassName("locations");
+    for (let locationElement of locationElements) {
+        let location = getRandomLocation(pool);
+        pool.splice(pool.indexOf(location), 1);
+        activeLocations.push(location);
+        let randomResource = getRandomResource();
+        activeLocationResources.push(randomResource);
+        locationElement.innerHTML = location.name + " " + resourceIcons[randomResource];
+    }
+    hideElement("game-start-controls");
+    showElement("location-controls");
+    setElementTextById("active-content", "Choose where you'd like to explore.");
+}
+
+function getCopyOfLocations() {
+    let pool = [];
+    for (let location of locations) {
+        pool.push(location);
+    }
+    return pool;
+}
+
+function setElementTextById(elementId, text) {
+    document.getElementById(elementId).textContent = text;
+}
+function setElementText(element, text) {
+    element.textContent = text;
+}
+
+function getRandomLocation(pool) {
+    let randomIndex = (Math.floor(Math.random() * pool.length));
+    return pool[randomIndex];
+}
+
+function getRandomResource() {
+    let randomResource = (Math.floor(Math.random() * Object.keys(resources).length));
+    return Object.keys(resources)[randomResource];
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let locationElements = document.getElementsByClassName("locations");
+
+    for (let i = 0; i < locationElements.length; i++) {
+        locationElements[i].addEventListener("click", function () {
+            activeLocation = activeLocations[i];
+            activeLocationResource = activeLocationResources[i];
+            travelTo(activeLocation);
+        });
+    }
+    document.getElementById("inspect").addEventListener("click", inspectLocation);
+    document.getElementById("loot").addEventListener("click", lootLocation);
+    document.getElementById("leave").addEventListener("click", leaveLocation);
+    document.getElementById("leave-clue").addEventListener("click", leaveInspect);
+    document.getElementById("gain-clue").addEventListener("click", gainClue);
+    document.getElementById("leave-area").addEventListener("click", leaveLocation);
+});
+
+function travelTo(activeLocation) {
+    hideElement("location-controls");
+    showElement("visited-location-controls");
+    setElementTextById("active-content", activeLocation.description);
+    var lootButton = document.getElementById("loot");
+    lootButton.innerHTML = "Loot" + " " + resourceIcons[activeLocationResource];
 }
