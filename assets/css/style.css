@@ -1,0 +1,45 @@
+#visited-location-controls{
+    display:none;
+}
+#events-controls {
+    display: none;
+}
+#location-controls{
+    display: none;
+}
+#inspect-clue-controls{
+    display: none;
+}
+#area-leave-controls{
+    display: none;
+}
+#game-end-controls{
+    display: none;
+}
+#game-start-controls{
+    display: none;
+}
+#glyph-1{
+    display:none;
+}
+#glyph-2{
+    display:none;
+}
+#glyph-3{
+    display:none;
+}
+#glyph-4{
+    display:none;
+}
+#glyph-5{
+    display:none;
+}
+#glyph-6{
+    display:none;
+}
+#glyph-7{
+    display:none;
+}
+#glyph-8{
+    display:none;
+}
