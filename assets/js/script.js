@@ -1,17 +1,18 @@
+// Resources available in the game
 const resources = {
     materials: 0,
     weapons: 0,
     food: 0,
     medicalSupplies: 0
 };
-
+// Icons used for particular resources
 const resourceIcons = {
     materials: "<i class='fa-solid fa-hammer'></i>",
     weapons: "<i class='fa-solid fa-gun'></i>",
     food: "<i class='fa-solid fa-utensils'></i>",
     medicalSupplies: "<i class='fa-solid fa-pump-medical'></i>"
 };
-
+// Locations found within the game and their parameters
 const locations = [
     {
         name: "School",
@@ -86,6 +87,7 @@ const locations = [
         clueId: 8
     }
 ];
+// Events that can occur during the game
 const events = [
     {
         name: "A crying voice",
@@ -142,15 +144,16 @@ const events = [
         requirements: {}
     }
 ];
-
+// Dialogue for the end of the game
 const endingDialogue = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E"
+    "The glyphs in your notebook all begin to glow.",
+    "You feel as though you're being whisked away to a far away place.",
+    "A voice echoes from the back of your mind.",
+    "'You are free to leave this place.'",
+    "You wake up in your bed, was it all a dream?"
 ];
 
+// Global variables declared and event listeners for the beginning of the game
 document.getElementById("player-name-submit").addEventListener("click", setName);
 document.getElementById("game-start-controls").addEventListener("click", startDay);
 document.getElementById("player-name-input").value = "";
@@ -163,6 +166,7 @@ let eventHappenedToday = false;
 let cluesFound = [];
 let currentEndDialogue = 0;
 
+// Function for allowing the player to choose a name
 function setName() {
     let playerName = document.getElementById("player-name-input").value;
     if (playerName === undefined || playerName.length == 0) {
@@ -173,18 +177,22 @@ function setName() {
     showElement("game-start-controls");
 }
 
+// Function for hiding HTML elements
 function hideElement(elementId) {
     document.getElementById(elementId).style.display = "none";
 }
 
+// Function for showing HTML elements
 function showElement(elementId, displayType = "block") {
     document.getElementById(elementId).style.display = displayType;
 }
 
+// Function for the beginning of a day
 function startDay() {
 
     let pool = getCopyOfLocations();
     let locationElements = document.getElementsByClassName("locations");
+    // Creates copies of the locations and assigns them to an array randomly
     for (let locationElement of locationElements) {
         let location = getRandomLocation(pool);
         pool.splice(pool.indexOf(location), 1);
@@ -198,6 +206,7 @@ function startDay() {
     setElementTextById("active-content", "Choose where you'd like to explore.");
 }
 
+// Function for creating a copy of the locations
 function getCopyOfLocations() {
     let pool = [];
     for (let location of locations) {
@@ -206,23 +215,29 @@ function getCopyOfLocations() {
     return pool;
 }
 
+// Function for setting element text by id 
 function setElementTextById(elementId, text) {
     document.getElementById(elementId).textContent = text;
 }
+
+// Function for setting element text
 function setElementText(element, text) {
     element.textContent = text;
 }
 
+// Function for getting a random location
 function getRandomLocation(pool) {
     let randomIndex = (Math.floor(Math.random() * pool.length));
     return pool[randomIndex];
 }
 
+// Function for getting a random resource for the location
 function getRandomResource() {
     let randomResource = (Math.floor(Math.random() * Object.keys(resources).length));
     return Object.keys(resources)[randomResource];
 }
 
+// Function for when page is loaded; adds event listeners to locations
 document.addEventListener("DOMContentLoaded", function () {
     let locationElements = document.getElementsByClassName("locations");
 
@@ -233,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             travelTo(activeLocation);
         });
     }
+    // Event listeners for active location controls
     document.getElementById("inspect").addEventListener("click", inspectLocation);
     document.getElementById("loot").addEventListener("click", lootLocation);
     document.getElementById("leave").addEventListener("click", leaveLocation);
@@ -241,6 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("leave-area").addEventListener("click", leaveLocation);
 });
 
+// Function for travelling to selected location
 function travelTo(activeLocation) {
     hideElement("location-controls");
     showElement("visited-location-controls");
@@ -249,6 +266,7 @@ function travelTo(activeLocation) {
     lootButton.innerHTML = "Loot" + " " + resourceIcons[activeLocationResource];
 }
 
+// Function for using inspect button at location
 function inspectLocation() {
     if (cluesFound.includes(activeLocation.clueId)) {
         hideElement("gain-clue");
@@ -265,6 +283,7 @@ function inspectLocation() {
 
 }
 
+// Function for using the loot button at location
 function lootLocation() {
     hideElement("visited-location-controls");
     showElement("area-leave-controls");
@@ -274,6 +293,7 @@ function lootLocation() {
     updateResources();
 }
 
+// Function for updating active player resources
 function updateResources() {
     setElementTextById("food", resources.food);
     setElementTextById("medical-supplies", resources.medicalSupplies);
@@ -281,6 +301,7 @@ function updateResources() {
     setElementTextById("materials", resources.materials);
 }
 
+// Function for leaving the active location
 function leaveLocation() {
     hideElement("visited-location-controls");
     hideElement("area-leave-controls");
@@ -293,12 +314,14 @@ function leaveLocation() {
     }
 }
 
+// Function for leaving the inspect option at a location
 function leaveInspect() {
     hideElement("inspect-clue-controls");
     showElement("visited-location-controls");
     setElementTextById("active-content", activeLocation.description);
 }
 
+// Function for awarding player with a clue
 function gainClue() {
     if (hasResources(activeLocation.clueCost) && !cluesFound.includes(activeLocation.clueId)) {
         setElementTextById("active-content", activeLocation.clueGainedMessage);
@@ -312,6 +335,7 @@ function gainClue() {
     }
 }
 
+// Function for ensuring player has required resources
 function hasResources(requiredResources) {
     for (let resource of Object.keys(requiredResources)) {
         if (resources[resource] < requiredResources[resource]) {
@@ -321,6 +345,7 @@ function hasResources(requiredResources) {
     return true;
 }
 
+// Function for ending game day, resets active location and location resource
 function endDay() {
     day++;
     document.getElementById("current-day").textContent = day;
@@ -336,6 +361,7 @@ function endDay() {
     }
 }
 
+// Function for random events occuring
 function startEvent() {
     eventHappenedToday = true;
     showElement("events-controls");
@@ -348,6 +374,7 @@ function startEvent() {
     setElementTextById("active-content", event.description.replace("<location>", activeLocation.name));
 }
 
+// Function for selecting event choices
 function eventchoice(choice) {
     setElementTextById("active-content", choice.description);
     for (let resource of Object.keys(choice.resources)) {
@@ -360,6 +387,7 @@ function eventchoice(choice) {
     showElement("area-leave-controls");
 }
 
+// Function for giving player resources
 function giveResources(resourceChanges) {
     for (let resource of Object.keys(resourceChanges)) {
         resources[resource] += resourceChanges[resource];
@@ -367,6 +395,7 @@ function giveResources(resourceChanges) {
     updateResources();
 }
 
+// Function for removing player resources
 function takeResources(resourceChanges) {
     for (let resource of Object.keys(resourceChanges)) {
         resources[resource] -= resourceChanges[resource];
@@ -374,6 +403,7 @@ function takeResources(resourceChanges) {
     updateResources();
 }
 
+// Function for selecting random event
 function getRandomEvent() {
     let eventPool = [];
     for (let event of events) {
@@ -385,17 +415,20 @@ function getRandomEvent() {
     return eventPool[randomNumber];
 }
 
+// Function for ensuring player has requirements
 function eventRequirementMet(event) {
     return hasResources(event.requirements);
 
 }
 
+// Function for starting the end game sequence
 function startEnd() {
     setElementTextById("active-content", endingDialogue[currentEndDialogue]);
     showElement("game-end-controls");
     document.getElementById("game-end-controls").addEventListener("click", nextDialogue);
 }
 
+// Function for skipping through end game sequence dialogue
 function nextDialogue() {
     currentEndDialogue++;
     if (currentEndDialogue >= endingDialogue.length) {
@@ -405,6 +438,7 @@ function nextDialogue() {
     }
 }
 
+// Function for ending the game
 function endGame() {
     hideElement("game-end-controls");
     setElementTextById("active-content", "You completed the game! Well done! Thanks for playing!");

@@ -140,10 +140,10 @@ HTML, CSS and Javascript were used to build this game and webpage.
 
 ## Deployment
 
-The site is deployed using GitHub Pages - [Trapped Inside](https://chriscsms.github.io/trappedinside/)
+The site is deployed using GitHub Pages - [Trapped Inside](https://chriscsms.github.io/trapped-inside/)
 
 1. Login or Signup to GitHub.
-2. Go to the repository for the project, https://github.com/ChrisCSMS/trappedinside.
+2. Go to the repository for the project, https://github.com/ChrisCSMS/trapped-inside.
 3. Find the settings button in the navigation bar and click.
 4. In the left section, under "Code and automation", find the pages section and click. 
 5. In the branch section, under "Build and deployment", click on the select branch dropdown and click main and the save. 
@@ -156,7 +156,7 @@ The site is deployed using GitHub Pages - [Trapped Inside](https://chriscsms.git
 To fork this repository:
 
 1. Login or Signup to GitHub. 
-2. Go to the repository for the project, https://github.com/ChrisCSMS/trappedinside.
+2. Go to the repository for the project, https://github.com/ChrisCSMS/trapped-inside.
 3. Click the fork button in the top-right corner.
 
 ### How to Clone
@@ -164,7 +164,7 @@ To fork this repository:
 To clone this repository:
 
 1. Login or Signup to GitHub. 
-2. Go to the repository for the project, https://github.com/ChrisCSMS/trappedinside.
+2. Go to the repository for the project, https://github.com/ChrisCSMS/trapped-inside.
 3. Click on the code button, select which option to clone with, HTTPS, SSH or GitHub CLI and copy the link.
 4. Open the terminal in your code editor and change the current working directory location to a new one for the copied directory.
 5. Type git clone into the terminal followed by the link copied in step 3 and press enter.

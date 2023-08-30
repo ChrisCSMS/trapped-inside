@@ -1,9 +1,11 @@
+/* Setting the text size and default colours for the page */
 body{
     font-size: x-large;
     color: #00ff00;
     background-color: #000000;
     font-family: 'Handjet', cursive;
 }
+/* Styles for the player controls and game window */
 #controls-area{
     margin: 1%;
 }
@@ -27,6 +29,7 @@ button, input{
 span{
     margin-right: 1%;
 }
+/* Buttons and glyphs are turned off to ensure only necessary controls are active */
 #visited-location-controls{
     display:none;
 }

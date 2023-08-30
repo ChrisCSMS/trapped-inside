@@ -7,6 +7,7 @@
     <meta name="description" content="Text-based horror game">
     <meta name="keywords" content="text, horror, undead, resource, glyph">
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Links to use google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@500&display=swap" rel="stylesheet">
@@ -14,54 +15,70 @@
 </head>
 
 <body>
+    <!-- The container for all the game elements -->
     <main id="game-area">
+        <!-- Span used to keep track of day -->
             <span>
                 Day: <span id="current-day">1</span>
             </span>
+            <!-- Span used to show players name-->
             <span>
                 Name: <span id="player-name">Player</span>
             </span>
+            <!-- Section that holds all active content mostly descriptions-->
             <div id="content-area">
             <p id="active-content">
                 You wake up in a cold, empty room. You don't remember how you got here.
             </p>
         </div>
+        <!-- Area for player controls-->
         <div id="controls-area">
+            <!-- Controls for choosing a name -->
             <div id="player-name-controls">
                 <input type="text" placeholder="Player" id="player-name-input">
                 <button id="player-name-submit">Submit</button>
             </div>
+            <!-- Controls for when events occur -->
             <div id="events-controls">
                 <button></button>
                 <button></button>
             </div>
+            <!-- Controls for choosing location to visit -->
             <div id="location-controls">
                 <button class="locations"></button>
                 <button class="locations"></button>
                 <button class="locations"></button>
             </div>
+            <!-- Controls for what to do at the chosen location -->
             <div id="visited-location-controls">
                 <button id = "inspect">Inspect</button>
                 <button id = "loot">Loot</button>
                 <button id = "leave">Leave</button>
             </div>
+            <!-- Controls when inspecting a location -->
             <div id="inspect-clue-controls">
                 <button id = "gain-clue" >Gain clue (<span id="clue-cost"></span>)</button>
                 <button id = "leave-clue" >Leave</button>
             </div>
+            <!-- Controls for the start of the game -->
             <div id="game-start-controls">
                 <button>Continue</button>
             </div>
+            <!-- Controls for the end of the game -->
             <div id="game-end-controls">
                 <button>Continue</button>
             </div>
+            <!-- Controls for leaving a location-->
             <div id="area-leave-controls">
                 <button id="leave-area">Leave</button>
             </div>
         </div>
+        <!-- Section that holds the players inventory -->
         <section id="inventory-area">
+            <!-- Section that holds the players current resources -->
             <div id="resources-area">
                 <h2>Resources</h2>
+                <!-- Resources and icons from fontawesome.com -->
                 <span> 
                     <i class='fa-solid fa-hammer'></i> Materials: <span id="materials">0</span>
                 </span>
@@ -75,11 +92,13 @@
                     <i class='fa-solid fa-pump-medical'></i> Medical Supplies: <span id="medical-supplies">0</span>
                 </span>
             </div>
+            <!-- Section that holds the clues found and glyphs-->
             <div id="clue-area">
                 <h2>Glyphs</h2>
                 <p>
                     Clues found: <span id="clues">0</span>
                 </p>
+                <!-- SVGS used for the glyphs -->
                 <object id="glyph-1" type="image/svg+xml" data="assets/images/glyph-1.svg" width="50" height="50"></object>
                 <object id="glyph-2" type="image/svg+xml" data="assets/images/glyph-2.svg" width="50" height="50"></object>
                 <object id="glyph-3" type="image/svg+xml" data="assets/images/glyph-3.svg" width="50" height="50"></object>
@@ -92,6 +111,7 @@
         </section>
     </main>
     <script src="assets/js/script.js"></script>
+    <!-- Script to access fontawesome icons -->
     <script src="https://kit.fontawesome.com/6705909493.js" crossorigin="anonymous"></script>
 </body>
 
