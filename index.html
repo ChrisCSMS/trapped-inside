@@ -10,15 +10,22 @@
 
 <body>
     <main id="game-area">
-        <section id="content-area">
             <span>
                 Day: <span id="current-day">1</span>
             </span>
+            <span>
+                Name: <span id="player-name">Player</span>
+            </span>
+            <section id="content-area"></section>
             <p id="active-content">
                 You wake up in a cold, empty room. You don't remember how you got here.
             </p>
         </section>
         <section id="controls-area">
+            <div id="player-name-controls">
+                <input type="text" placeholder="Player" id="player-name-input">
+                <button id="player-name-submit">Submit</button>
+            </div>
             <div id="events-controls">
                 <button></button>
                 <button></button>
