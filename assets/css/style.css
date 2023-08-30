@@ -1,3 +1,31 @@
+body{
+    font-size: large;
+    color: #00ff00;
+    background-color: #000000;
+}
+#controls-area{
+    margin: 1%;
+}
+#content-area{
+    border: 2px solid #ffffff;
+    background-color:  #000000;
+    color: #00ff00;
+    text-align: center;
+    padding: 10%;
+    font-size: x-large;
+    margin-top: 5px;
+}
+button, input{
+    padding: 2%;
+    width: 33%;
+    font-size: large;
+    border: 1px solid #ffffff;
+    background-color: #000000;
+    color: #00ff00;
+}
+span{
+    margin-right: 1%;
+}
 #visited-location-controls{
     display:none;
 }
