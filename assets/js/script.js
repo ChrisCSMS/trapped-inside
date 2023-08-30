@@ -310,3 +310,18 @@ function hasResources(requiredResources) {
     }
     return true;
 }
+
+function endDay() {
+    day++;
+    document.getElementById("current-day").textContent = day;
+    activeLocations = [];
+    activeLocation = undefined;
+    activeLocationResources = [];
+    activeLocationResource = undefined;
+    eventHappenedToday = false;
+    if (cluesFound.length == 8) {
+        startEnd();
+    } else {
+        startDay();
+    }
+}
