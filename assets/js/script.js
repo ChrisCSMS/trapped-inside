@@ -141,3 +141,26 @@ const events = [
         requirements: {}
     }
 ];
+
+document.getElementById("player-name-submit").addEventListener("click", setName);
+document.getElementById("game-start-controls").addEventListener("click", startDay);
+document.getElementById("player-name-input").value = "";
+let day = 1;
+
+function setName() {
+    let playerName = document.getElementById("player-name-input").value;
+    if (playerName === undefined || playerName.length == 0) {
+        playerName = "Player";
+    }
+    setElementTextById("player-name", playerName);
+    hideElement("player-name-controls");
+    showElement("game-start-controls");
+}
+
+function hideElement(elementId) {
+    document.getElementById(elementId).style.display = "none";
+}
+
+function showElement(elementId, displayType = "block") {
+    document.getElementById(elementId).style.display = displayType;
+}
