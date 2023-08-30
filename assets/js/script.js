@@ -150,6 +150,7 @@ let activeLocations = [];
 let activeLocation = undefined;
 let activeLocationResources = [];
 let activeLocationResource = undefined;
+let eventHappenedToday = false;
 let cluesFound = [];
 
 function setName() {
@@ -236,4 +237,76 @@ function travelTo(activeLocation) {
     setElementTextById("active-content", activeLocation.description);
     var lootButton = document.getElementById("loot");
     lootButton.innerHTML = "Loot" + " " + resourceIcons[activeLocationResource];
+}
+
+function inspectLocation() {
+    if (cluesFound.includes(activeLocation.clueId)) {
+        hideElement("gain-clue");
+        setElementTextById("active-content", activeLocation.clueFoundMessage);
+    } else {
+        let resource = Object.keys(activeLocation.clueCost)[0];
+        document.getElementById("clue-cost").innerHTML = activeLocation.clueCost[resource] + resourceIcons[resource];
+        showElement("gain-clue", "inline");
+        setElementTextById("active-content", activeLocation.clueDescription);
+    }
+    hideElement("visited-location-controls");
+    showElement("inspect-clue-controls");
+
+
+}
+
+function lootLocation() {
+    hideElement("visited-location-controls");
+    showElement("area-leave-controls");
+    let amountGained = Math.floor(Math.random() * 9) + 1;
+    document.getElementById("active-content").innerHTML = "You found " + amountGained + " " + resourceIcons[activeLocationResource];
+    resources[activeLocationResource] += amountGained;
+    updateResources();
+}
+
+function updateResources() {
+    setElementTextById("food", resources.food);
+    setElementTextById("medical-supplies", resources.medicalSupplies);
+    setElementTextById("weapons", resources.weapons);
+    setElementTextById("materials", resources.materials);
+}
+
+function leaveLocation() {
+    hideElement("visited-location-controls");
+    hideElement("area-leave-controls");
+    let eventChance = 0.3;
+    let eventOccurs = Math.random() < eventChance;
+    if (eventOccurs && !eventHappenedToday) {
+        startEvent();
+    } else {
+        endDay();
+    }
+}
+
+function leaveInspect() {
+    hideElement("inspect-clue-controls");
+    showElement("visited-location-controls");
+    setElementTextById("active-content", activeLocation.description);
+}
+
+function gainClue() {
+    if (hasResources(activeLocation.clueCost) && !cluesFound.includes(activeLocation.clueId)) {
+        setElementTextById("active-content", activeLocation.clueGainedMessage);
+        cluesFound.push(activeLocation.clueId);
+        showElement("glyph-" + activeLocation.clueId, "inline");
+        hideElement("gain-clue");
+        takeResources(activeLocation.clueCost);
+        setElementTextById("clues", cluesFound.length);
+    } else {
+        setElementTextById("active-content", "You don't have enough resources.");
+    }
+}
+
+function hasResources(requiredResources) {
+    for (let resource of Object.keys(requiredResources)) {
+        if (resources[resource] < requiredResources[resource]) {
+            return false;
+        }
+    }
+    return true;
 }
