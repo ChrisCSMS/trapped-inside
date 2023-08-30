@@ -152,6 +152,7 @@ let activeLocationResources = [];
 let activeLocationResource = undefined;
 let eventHappenedToday = false;
 let cluesFound = [];
+let currentEndDialogue = 0;
 
 function setName() {
     let playerName = document.getElementById("player-name-input").value;
@@ -324,4 +325,67 @@ function endDay() {
     } else {
         startDay();
     }
+}
+
+function startEvent() {
+    eventHappenedToday = true;
+    showElement("events-controls");
+    let event = getRandomEvent();
+    let buttons = document.getElementById("events-controls").getElementsByTagName("button");
+    buttons[0].innerHTML = event.choices[0].name;
+    buttons[1].innerHTML = event.choices[1].name;
+    buttons[0].onclick = function () { eventchoice(event.choices[0]) };
+    buttons[1].onclick = function () { eventchoice(event.choices[1]) };
+    setElementTextById("active-content", event.description.replace("<location>", activeLocation.name));
+}
+
+function eventchoice(choice) {
+    setElementTextById("active-content", choice.description);
+    for (let resource of Object.keys(choice.resources)) {
+        resources[resource] += choice.resources[resource];
+        document.getElementById("active-content").innerHTML += "<br>You found " + choice.resources[resource] + " " + resourceIcons[resource];
+
+    }
+    updateResources();
+    hideElement("events-controls");
+    showElement("area-leave-controls");
+}
+
+function giveResources(resourceChanges) {
+    for (let resource of Object.keys(resourceChanges)) {
+        resources[resource] += resourceChanges[resource];
+    }
+    updateResources();
+}
+
+function takeResources(resourceChanges) {
+    for (let resource of Object.keys(resourceChanges)) {
+        resources[resource] -= resourceChanges[resource];
+    }
+    updateResources();
+}
+
+function getRandomEvent() {
+    let eventPool = [];
+    for (let event of events) {
+        if (eventRequirementMet(event)) {
+            eventPool.push(event);
+        }
+    }
+    let randomNumber = Math.floor(Math.random() * eventPool.length);
+    return eventPool[randomNumber];
+}
+
+function eventRequirementMet(event) {
+    return hasResources(event.requirements);
+
+}
+
+function hasResources(requiredResources) {
+    for (let resource of Object.keys(requiredResources)) {
+        if (resources[resource] < requiredResources[resource]) {
+            return false;
+        }
+    }
+    return true;
 }
